@@ -5,25 +5,22 @@ let crypto = require('crypto');
 const exec = require('child_process').exec;
 http.createServer(function (req, res) {
     req.on('data', function(chunk) {
-
-        const signature = `sha1=${crypto
-            .createHmac('sha1', secret)
-            .update(chunk)
-            .digest('hex')}`;
-    
-        const isAllowed = req.headers['x-hub-signature'] === signature;
-            
-        const body = JSON.parse(chunk);
-        console.log(body);
-        const isMaster = body?.ref === 'refs/heads/master';
-
-        if (isAllowed && isMaster) {
-        // do something
-        }
+        // let sig = "sha1=" + crypto.createHmac('sha1', secret).update(chunk.toString()).digest('hex');
+        // console.log(req.headers['x-hub-signature'] == sig);
+        console.log(chunk.toString());
+        // if (req.headers['x-hub-signature'] == sig) {
+        //     console.log(4);
+        // }
     });
-    req.on('payload', function(chunk) {
-
+    req.on('issues', function(chunk) {
+        // let sig = "sha1=" + crypto.createHmac('sha1', secret).update(chunk.toString()).digest('hex');
+        // console.log(req.headers['x-hub-signature'] == sig);
+        console.log('issues');
+        // if (req.headers['x-hub-signature'] == sig) {
+        //     console.log(4);
+        // }
     });
+
 
     res.end();
 }).listen(9084);
